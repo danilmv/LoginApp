@@ -33,11 +33,11 @@ class LoginPresenter : LoginContract.Presenter {
         view?.apply {
             setState(LoginContract.ViewState.LOADING)
             delayedRun {
+                setState(LoginContract.ViewState.COMPLETE)
                 val user = users[login]
                 if (user != null && user.password == pass) {
                     showUser(user)
                 } else {
-                    setState(LoginContract.ViewState.COMPLETE)
                     setError(LoginContract.Error.WRONG_PASSWORD)
                 }
             }.invoke()
@@ -49,11 +49,17 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     override fun onForgetPassword(login: String) {
-        val user = users[login]
-        if (user != null) {
-            view?.showForget(user)
-        } else {
-            view?.setError(LoginContract.Error.NO_LOGIN)
+        view?.apply {
+            setState(LoginContract.ViewState.LOADING)
+            delayedRun {
+                setState(LoginContract.ViewState.COMPLETE)
+                val user = users[login]
+                if (user != null) {
+                    showForget(user)
+                } else {
+                    setError(LoginContract.Error.NO_LOGIN)
+                }
+            }.invoke()
         }
     }
 }
