@@ -1,6 +1,8 @@
 package com.andriod.loginapp.entity.login
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,35 +20,43 @@ class LoginFragment : Fragment(), LoginContract.View {
     private val binding: FragmentLoginBinding get() = _binding!!
 
     private val presenter: LoginContract.Presenter by lazy { LoginPresenter() }
-
     private val contract by lazy { requireActivity() as Contract }
+    private val handler by lazy { Handler(Looper.getMainLooper()) }
+    private val changeStateRunnable =
+        { state: LoginContract.ViewState ->
+            {
+                binding.root.children.forEach { it.isVisible = false }
 
-    interface Contract{
+                when (state) {
+                    LoginContract.ViewState.IDLE -> binding.container.isVisible = true
+                    LoginContract.ViewState.LOADING -> binding.progressBar.isVisible = true
+                    LoginContract.ViewState.COMPLETE -> binding.container.isVisible = true
+                }
+            }
+        }
+
+    interface Contract {
         fun showSignIn()
         fun showForget(user: User)
         fun showUser(user: User)
     }
 
     override fun setState(state: LoginContract.ViewState) {
-        binding.root.children.forEach {
-            it.isVisible = false
-        }
-
-        when (state) {
-            LoginContract.ViewState.IDLE -> binding.container.isVisible = true
-            LoginContract.ViewState.LOADING -> binding.progressBar.isVisible = true
-            LoginContract.ViewState.COMPLETE -> binding.container.isVisible = true
-        }
+        handler.post(changeStateRunnable(state))
     }
 
     override fun setError(error: LoginContract.Error) = when (error) {
         LoginContract.Error.WRONG_PASSWORD ->
-            Snackbar.make(binding.root, getString(R.string.Error_password), Snackbar.LENGTH_SHORT)
-                .setAction("forget password")
-                { presenter.onForgetPassword(binding.loginEditText.text.toString()) }
-                .show()
+            Snackbar.make(
+                binding.root,
+                getString(R.string.Error_password),
+                Snackbar.LENGTH_INDEFINITE
+            ).setAction(getString(R.string.forget_password_action)) {
+                presenter.onForgetPassword(binding.loginEditText.text.toString())
+            }.show()
         LoginContract.Error.NO_LOGIN ->
-            Toast.makeText(requireContext(), "No such login", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.missing_login), Toast.LENGTH_SHORT)
+                .show()
     }
 
     override fun showSignIn() {

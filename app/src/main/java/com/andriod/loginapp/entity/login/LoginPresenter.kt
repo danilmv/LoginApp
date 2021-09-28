@@ -3,20 +3,26 @@ package com.andriod.loginapp.entity.login
 import com.andriod.loginapp.entity.User
 import java.lang.Thread.sleep
 
-private const val SLEEP_TIME = 3000L
+private const val SLEEP_TIME = 1000L
 
 class LoginPresenter : LoginContract.Presenter {
     private var view: LoginContract.View? = null
     private var users = mutableMapOf<String, User>()
 
+    private val delayedRun = { runnable: Runnable ->
+        {
+            Thread {
+                sleep(SLEEP_TIME)
+                runnable.run()
+            }.start()
+        }
+    }
+
     override fun onAttach(view: LoginContract.View) {
         this.view = view
 
         view.setState(LoginContract.ViewState.LOADING)
-        Thread {
-            sleep(SLEEP_TIME)
-            view.setState(LoginContract.ViewState.IDLE)
-        }.start()
+        delayedRun { view.setState(LoginContract.ViewState.IDLE) }.invoke()
     }
 
     override fun onDetach() {
@@ -24,11 +30,17 @@ class LoginPresenter : LoginContract.Presenter {
     }
 
     override fun onLogin(login: String, pass: String) {
-        val user = users[login]
-        if (user != null && user.password == pass) {
-            view?.showUser(user)
-        } else {
-            view?.setError(LoginContract.Error.WRONG_PASSWORD)
+        view?.apply {
+            setState(LoginContract.ViewState.LOADING)
+            delayedRun {
+                val user = users[login]
+                if (user != null && user.password == pass) {
+                    showUser(user)
+                } else {
+                    setState(LoginContract.ViewState.COMPLETE)
+                    setError(LoginContract.Error.WRONG_PASSWORD)
+                }
+            }.invoke()
         }
     }
 
@@ -38,9 +50,9 @@ class LoginPresenter : LoginContract.Presenter {
 
     override fun onForgetPassword(login: String) {
         val user = users[login]
-        if (user!= null){
+        if (user != null) {
             view?.showForget(user)
-        }else{
+        } else {
             view?.setError(LoginContract.Error.NO_LOGIN)
         }
     }

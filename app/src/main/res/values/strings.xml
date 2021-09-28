@@ -5,4 +5,6 @@
     <string name="login_button">login</string>
     <string name="signin_button">signin</string>
     <string name="Error_password">Wrong login or password</string>
+    <string name="forget_password_action">forget password?</string>
+    <string name="missing_login">No such login</string>
 </resources>
