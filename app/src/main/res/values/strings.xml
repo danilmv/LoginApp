@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LoginApp</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="login_button">login</string>
+    <string name="signin_button">signin</string>
+    <string name="Error_password">Wrong login or password</string>
 </resources>

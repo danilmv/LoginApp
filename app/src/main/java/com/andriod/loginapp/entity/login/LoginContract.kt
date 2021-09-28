@@ -6,11 +6,16 @@ class LoginContract {
     enum class ViewState{
         IDLE, LOADING, COMPLETE
     }
+    enum class Error{
+        WRONG_PASSWORD, NO_LOGIN
+    }
 
     interface View{
         fun setState(state: ViewState)
-        fun setUser(user:User)
-        fun setError()
+        fun setError(error: Error)
+        fun showSignIn()
+        fun showForget(user: User)
+        fun showUser(user: User)
     }
 
     interface Presenter{
@@ -19,6 +24,6 @@ class LoginContract {
 
         fun onLogin(login: String, pass:String)
         fun onSignIn()
-        fun onForgetPassword()
+        fun onForgetPassword(login: String)
     }
 }
