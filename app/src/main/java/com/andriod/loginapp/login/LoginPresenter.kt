@@ -1,6 +1,7 @@
-package com.andriod.loginapp.entity.login
+package com.andriod.loginapp.login
 
 import com.andriod.loginapp.entity.User
+import com.andriod.loginapp.base.BaseContract
 import java.lang.Thread.sleep
 
 private const val SLEEP_TIME = 1000L
@@ -21,8 +22,8 @@ class LoginPresenter : LoginContract.Presenter {
     override fun onAttach(view: LoginContract.View) {
         this.view = view
 
-        view.setState(LoginContract.ViewState.LOADING)
-        delayedRun { view.setState(LoginContract.ViewState.IDLE) }.invoke()
+        view.setState(BaseContract.ViewState.LOADING)
+        delayedRun { view.setState(BaseContract.ViewState.IDLE) }.invoke()
     }
 
     override fun onDetach() {
@@ -31,9 +32,9 @@ class LoginPresenter : LoginContract.Presenter {
 
     override fun onLogin(login: String, pass: String) {
         view?.apply {
-            setState(LoginContract.ViewState.LOADING)
+            setState(BaseContract.ViewState.LOADING)
             delayedRun {
-                setState(LoginContract.ViewState.COMPLETE)
+                setState(BaseContract.ViewState.COMPLETE)
                 val user = users[login]
                 if (user != null && user.password == pass) {
                     showUser(user)
@@ -50,9 +51,9 @@ class LoginPresenter : LoginContract.Presenter {
 
     override fun onForgetPassword(login: String) {
         view?.apply {
-            setState(LoginContract.ViewState.LOADING)
+            setState(BaseContract.ViewState.LOADING)
             delayedRun {
-                setState(LoginContract.ViewState.COMPLETE)
+                setState(BaseContract.ViewState.COMPLETE)
                 val user = users[login]
                 if (user != null) {
                     showForget(user)

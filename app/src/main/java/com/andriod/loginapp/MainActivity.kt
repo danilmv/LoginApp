@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.andriod.loginapp.databinding.ActivityMainBinding
 import com.andriod.loginapp.entity.User
-import com.andriod.loginapp.entity.login.LoginFragment
+import com.andriod.loginapp.login.LoginFragment
 
 class MainActivity : AppCompatActivity(), LoginFragment.Contract {
     private lateinit var binding: ActivityMainBinding

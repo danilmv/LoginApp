@@ -1,4 +1,4 @@
-package com.andriod.loginapp.entity.login
+package com.andriod.loginapp.login
 
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.andriod.loginapp.R
 import com.andriod.loginapp.databinding.FragmentLoginBinding
 import com.andriod.loginapp.entity.User
+import com.andriod.loginapp.base.BaseContract
 import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment(), LoginContract.View {
@@ -22,14 +23,14 @@ class LoginFragment : Fragment(), LoginContract.View {
     private val presenter: LoginContract.Presenter by lazy { LoginPresenter() }
     private val contract by lazy { requireActivity() as Contract }
     private val handler by lazy { Handler(Looper.getMainLooper()) }
-    private val changeStateRunnable = { state: LoginContract.ViewState ->
+    private val changeStateRunnable = { state: BaseContract.ViewState ->
         {
             binding.root.children.forEach { it.isVisible = false }
 
             when (state) {
-                LoginContract.ViewState.IDLE -> binding.container.isVisible = true
-                LoginContract.ViewState.LOADING -> binding.progressBar.isVisible = true
-                LoginContract.ViewState.COMPLETE -> binding.container.isVisible = true
+                BaseContract.ViewState.IDLE -> binding.container.isVisible = true
+                BaseContract.ViewState.LOADING -> binding.progressBar.isVisible = true
+                BaseContract.ViewState.COMPLETE -> binding.container.isVisible = true
             }
         }
     }
@@ -50,7 +51,7 @@ class LoginFragment : Fragment(), LoginContract.View {
         fun showUser(user: User)
     }
 
-    override fun setState(state: LoginContract.ViewState) {
+    override fun setState(state: BaseContract.ViewState) {
         handler.post(changeStateRunnable(state))
     }
 
@@ -67,7 +68,7 @@ class LoginFragment : Fragment(), LoginContract.View {
         Snackbar.make(
             binding.root,
             getString(R.string.Error_password),
-            Snackbar.LENGTH_INDEFINITE
+            Snackbar.LENGTH_LONG
         ).setAction(getString(R.string.forget_password_action)) {
             presenter.onForgetPassword(binding.loginEditText.text.toString())
         }.show()
