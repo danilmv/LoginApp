@@ -1,12 +1,13 @@
 package com.andriod.loginapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.andriod.loginapp.databinding.ActivityMainBinding
 import com.andriod.loginapp.entity.User
 import com.andriod.loginapp.login.LoginFragment
+import com.andriod.loginapp.signin.SigninFragment
 
-class MainActivity : AppCompatActivity(), LoginFragment.Contract {
+class MainActivity : AppCompatActivity(), LoginFragment.Contract, SigninFragment.Contract {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity(), LoginFragment.Contract {
     }
 
     override fun showSignIn() {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.container.id, SigninFragment())
+            .commit()
     }
 
     override fun showForget(user: User) {
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity(), LoginFragment.Contract {
     override fun showUser(user: User) {
     }
 
-    fun showLogin(){
+    override fun showLogin() {
         supportFragmentManager.beginTransaction()
             .replace(binding.container.id, LoginFragment())
             .commit()

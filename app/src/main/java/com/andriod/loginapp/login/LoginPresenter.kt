@@ -1,26 +1,16 @@
 package com.andriod.loginapp.login
 
-import com.andriod.loginapp.entity.User
 import com.andriod.loginapp.base.BaseContract
-import java.lang.Thread.sleep
+import com.andriod.loginapp.base.BaseContract.Companion.delayedRun
+import com.andriod.loginapp.entity.User
 
-private const val SLEEP_TIME = 1000L
 
 class LoginPresenter : LoginContract.Presenter {
     private var view: LoginContract.View? = null
     private var users = mutableMapOf<String, User>()
 
-    private val delayedRun = { runnable: Runnable ->
-        {
-            Thread {
-                sleep(SLEEP_TIME)
-                runnable.run()
-            }.start()
-        }
-    }
-
-    override fun onAttach(view: LoginContract.View) {
-        this.view = view
+    override fun onAttach(view: BaseContract.View) {
+        this.view = view as LoginContract.View
 
         view.setState(BaseContract.ViewState.LOADING)
         delayedRun { view.setState(BaseContract.ViewState.IDLE) }.invoke()

@@ -1,6 +1,6 @@
 package com.andriod.loginapp.base
 
-import com.andriod.loginapp.login.LoginContract
+private const val SLEEP_TIME = 1000L
 
 abstract class BaseContract {
     enum class ViewState {
@@ -12,7 +12,19 @@ abstract class BaseContract {
     }
 
     interface Presenter {
-        fun onAttach(view: LoginContract.View)
+
+        fun onAttach(view: View)
         fun onDetach()
+    }
+
+    companion object {
+        val delayedRun = { runnable: Runnable ->
+            {
+                Thread {
+                    Thread.sleep(SLEEP_TIME)
+                    runnable.run()
+                }.start()
+            }
+        }
     }
 }

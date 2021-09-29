@@ -7,4 +7,13 @@
     <string name="Error_password">Wrong login or password</string>
     <string name="forget_password_action">forget password?</string>
     <string name="missing_login">No such login</string>
+    <string name="register_button">register</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="email">email</string>
+    <string name="password_again">password again</string>
+    <string name="error_wrong_login">must not be empty</string>
+    <string name="error_wrong_email">wrong email</string>
+    <string name="error_passwords_not_match">passwords do not match</string>
+    <string name="error_login_exists">this login already exists</string>
+    <string name="error_wrong_password">must not be empty</string>
 </resources>
