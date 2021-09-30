@@ -11,7 +11,7 @@ class LoginContract: BaseContract() {
     interface View: BaseContract.View{
         fun setError(error: Error)
         fun showSignIn()
-        fun showForget(user: User)
+        fun showForget(pass: String)
         fun showUser(user: User)
     }
 

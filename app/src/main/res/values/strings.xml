@@ -17,4 +17,5 @@
     <string name="error_login_exists">this login already exists</string>
     <string name="error_wrong_password">must not be empty</string>
     <string name="logout_button">logout</string>
+    <string name="password_is">Your password is: %1$s</string>
 </resources>

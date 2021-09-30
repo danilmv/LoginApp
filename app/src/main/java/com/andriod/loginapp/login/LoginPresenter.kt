@@ -5,7 +5,7 @@ import com.andriod.loginapp.base.BaseContract.Companion.delayedRun
 import com.andriod.loginapp.model.DataProvider
 
 
-class LoginPresenter(val dataProvider: DataProvider) : LoginContract.Presenter {
+class LoginPresenter(private val dataProvider: DataProvider) : LoginContract.Presenter {
     private var view: LoginContract.View? = null
 
     override fun onAttach(view: BaseContract.View) {
@@ -43,7 +43,7 @@ class LoginPresenter(val dataProvider: DataProvider) : LoginContract.Presenter {
             delayedRun {
                 setState(BaseContract.ViewState.COMPLETE)
                 if (dataProvider.checkLoginExists(login)) {
-                    showForget(dataProvider.getUser(login)!!)
+                    showForget(dataProvider.getUser(login)!!.password)
                 } else {
                     setError(LoginContract.Error.NO_LOGIN)
                 }

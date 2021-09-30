@@ -82,8 +82,11 @@ class LoginFragment : Fragment(), LoginContract.View {
         contract.showSignIn()
     }
 
-    override fun showForget(user: User) {
-        //todo
+    override fun showForget(pass: String) {
+        Toast.makeText(
+            context,
+            String.format(getString(R.string.password_is), pass), Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun showUser(user: User) {

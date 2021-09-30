@@ -5,7 +5,7 @@ import com.andriod.loginapp.base.BaseContract.Companion.delayedRun
 import com.andriod.loginapp.entity.User
 import com.andriod.loginapp.model.DataProvider
 
-class SigninPresenter(val dataProvider: DataProvider) : SigninContract.Presenter {
+class SigninPresenter(private val dataProvider: DataProvider) : SigninContract.Presenter {
     private var view: SigninContract.View? = null
 
     override fun onSave(login: String, email: String, password: String, password2: String) {
