@@ -1,5 +1,8 @@
 package com.andriod.loginapp.base
 
+import android.os.Handler
+import android.os.HandlerThread
+
 private const val SLEEP_TIME = 1000L
 
 abstract class BaseContract {
@@ -18,13 +21,8 @@ abstract class BaseContract {
     }
 
     companion object {
-        val delayedRun = { runnable: Runnable ->
-            {
-                Thread {
-                    Thread.sleep(SLEEP_TIME)
-                    runnable.run()
-                }.start()
-            }
-        }
+        private val handlerThread = HandlerThread("handlerThread").apply { isDaemon = true;start() }
+        private val handler = Handler(handlerThread.looper)
+        val delayedRun = { runnable: Runnable -> handler.postDelayed(runnable, SLEEP_TIME) }
     }
 }

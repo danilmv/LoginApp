@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showLogin()
+        if (savedInstanceState == null)
+            showLogin()
     }
 
     override fun showSignIn() {

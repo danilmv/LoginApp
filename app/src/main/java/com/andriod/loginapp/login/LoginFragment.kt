@@ -26,12 +26,14 @@ class LoginFragment : Fragment(), LoginContract.View {
     private val handler by lazy { Handler(Looper.getMainLooper()) }
     private val changeStateRunnable = { state: BaseContract.ViewState ->
         {
-            binding.root.children.forEach { it.isVisible = false }
+            if (_binding != null) {
+                binding.root.children.forEach { it.isVisible = false }
 
-            when (state) {
-                BaseContract.ViewState.IDLE -> binding.container.isVisible = true
-                BaseContract.ViewState.LOADING -> binding.progressBar.isVisible = true
-                BaseContract.ViewState.COMPLETE -> binding.container.isVisible = true
+                when (state) {
+                    BaseContract.ViewState.IDLE -> binding.container.isVisible = true
+                    BaseContract.ViewState.LOADING -> binding.progressBar.isVisible = true
+                    BaseContract.ViewState.COMPLETE -> binding.container.isVisible = true
+                }
             }
         }
     }

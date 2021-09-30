@@ -25,7 +25,7 @@ class SigninPresenter : SigninContract.Presenter {
                         showUser(user)
                     }
                 }
-            }.invoke()
+            }
         }
     }
 
@@ -42,7 +42,7 @@ class SigninPresenter : SigninContract.Presenter {
         this.view = view as SigninContract.View
 
         view.setState(BaseContract.ViewState.LOADING)
-        delayedRun { view.setState(BaseContract.ViewState.IDLE) }.invoke()
+        delayedRun { view.setState(BaseContract.ViewState.IDLE) }
     }
 
     override fun onDetach() {

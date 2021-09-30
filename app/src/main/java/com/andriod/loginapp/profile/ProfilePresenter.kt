@@ -14,7 +14,7 @@ class ProfilePresenter : ProfileContract.Presenter {
         this.view = view as ProfileContract.View
 
         view.setState(BaseContract.ViewState.LOADING)
-        BaseContract.delayedRun { view.setState(BaseContract.ViewState.IDLE) }.invoke()
+        BaseContract.delayedRun { view.setState(BaseContract.ViewState.IDLE) }
     }
 
     override fun onDetach() {

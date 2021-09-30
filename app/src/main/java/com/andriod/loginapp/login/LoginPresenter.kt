@@ -11,9 +11,11 @@ class LoginPresenter : LoginContract.Presenter {
 
     override fun onAttach(view: BaseContract.View) {
         this.view = view as LoginContract.View
-
         view.setState(BaseContract.ViewState.LOADING)
-        delayedRun { view.setState(BaseContract.ViewState.IDLE) }.invoke()
+
+        delayedRun {
+            this.view?.setState(BaseContract.ViewState.IDLE)
+        }
     }
 
     override fun onDetach() {
@@ -31,7 +33,7 @@ class LoginPresenter : LoginContract.Presenter {
                 } else {
                     setError(LoginContract.Error.WRONG_PASSWORD)
                 }
-            }.invoke()
+            }
         }
     }
 
@@ -50,7 +52,7 @@ class LoginPresenter : LoginContract.Presenter {
                 } else {
                     setError(LoginContract.Error.NO_LOGIN)
                 }
-            }.invoke()
+            }
         }
     }
 }
