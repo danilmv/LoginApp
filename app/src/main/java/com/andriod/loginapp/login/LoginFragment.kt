@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.andriod.loginapp.LoginApplication
 import com.andriod.loginapp.R
 import com.andriod.loginapp.base.BaseContract
 import com.andriod.loginapp.databinding.FragmentLoginBinding
@@ -21,8 +22,9 @@ class LoginFragment : Fragment(), LoginContract.View {
     private var _binding: FragmentLoginBinding? = null
     private val binding: FragmentLoginBinding get() = _binding!!
 
-    private val presenter: LoginContract.Presenter by lazy { LoginPresenter() }
+    private val presenter: LoginContract.Presenter by lazy { LoginPresenter(loginApplication.dataProvider) }
     private val contract by lazy { requireActivity() as Contract }
+    private val loginApplication by lazy { requireActivity().application as LoginApplication }
     private val handler by lazy { Handler(Looper.getMainLooper()) }
     private val changeStateRunnable = { state: BaseContract.ViewState ->
         {

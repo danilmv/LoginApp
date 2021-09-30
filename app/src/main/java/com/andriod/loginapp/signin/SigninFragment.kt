@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.andriod.loginapp.LoginApplication
 import com.andriod.loginapp.R
 import com.andriod.loginapp.base.BaseContract
 import com.andriod.loginapp.databinding.FragmentSigninBinding
@@ -18,8 +19,9 @@ class SigninFragment : Fragment(), SigninContract.View {
     private var _binding: FragmentSigninBinding? = null
     private val binding: FragmentSigninBinding get() = _binding!!
 
-    private val presenter: SigninContract.Presenter by lazy { SigninPresenter() }
+    private val presenter: SigninContract.Presenter by lazy { SigninPresenter(loginApplication.dataProvider) }
     private val contract by lazy { requireActivity() as Contract }
+    private val loginApplication by lazy { requireActivity().application as LoginApplication }
     private val handler by lazy { Handler(Looper.getMainLooper()) }
 
     private val changeStateRunnable = { state: BaseContract.ViewState ->

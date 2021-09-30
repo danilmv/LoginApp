@@ -3,10 +3,10 @@ package com.andriod.loginapp.signin
 import com.andriod.loginapp.base.BaseContract
 import com.andriod.loginapp.base.BaseContract.Companion.delayedRun
 import com.andriod.loginapp.entity.User
+import com.andriod.loginapp.model.DataProvider
 
-class SigninPresenter : SigninContract.Presenter {
+class SigninPresenter(val dataProvider: DataProvider) : SigninContract.Presenter {
     private var view: SigninContract.View? = null
-    private var users = mutableMapOf<String, User>()
 
     override fun onSave(login: String, email: String, password: String, password2: String) {
         view?.apply {
@@ -15,7 +15,7 @@ class SigninPresenter : SigninContract.Presenter {
                 setState(BaseContract.ViewState.IDLE)
                 when {
                     login.isBlank() -> setError(SigninContract.Error.WRONG_LOGIN)
-                    users[login] != null -> setError(SigninContract.Error.LOGIN_EXISTS)
+                    dataProvider.checkLoginExists(login) -> setError(SigninContract.Error.LOGIN_EXISTS)
                     email.isBlank() -> setError(SigninContract.Error.WRONG_EMAIL)
                     password.isBlank() -> setError(SigninContract.Error.WRONG_PASSWORD)
                     password != password2 -> setError(SigninContract.Error.PASSWORDS_NOT_MATCH)
@@ -30,9 +30,8 @@ class SigninPresenter : SigninContract.Presenter {
     }
 
     private fun saveUser(user: User) {
-        users[user.login] = user
+        dataProvider.saveUser(user)
     }
-
 
     override fun onCancel() {
         view?.showLogin()

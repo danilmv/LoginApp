@@ -2,12 +2,11 @@ package com.andriod.loginapp.login
 
 import com.andriod.loginapp.base.BaseContract
 import com.andriod.loginapp.base.BaseContract.Companion.delayedRun
-import com.andriod.loginapp.entity.User
+import com.andriod.loginapp.model.DataProvider
 
 
-class LoginPresenter : LoginContract.Presenter {
+class LoginPresenter(val dataProvider: DataProvider) : LoginContract.Presenter {
     private var view: LoginContract.View? = null
-    private var users = mutableMapOf<String, User>()
 
     override fun onAttach(view: BaseContract.View) {
         this.view = view as LoginContract.View
@@ -25,9 +24,8 @@ class LoginPresenter : LoginContract.Presenter {
             setState(BaseContract.ViewState.LOADING)
             delayedRun {
                 setState(BaseContract.ViewState.COMPLETE)
-                val user = users[login]
-                if (user != null && user.password == pass) {
-                    showUser(user)
+                if (dataProvider.checkLoginExists(login) && dataProvider.checkPassword(login, pass)) {
+                    showUser(dataProvider.getUser(login)!!)
                 } else {
                     setError(LoginContract.Error.WRONG_PASSWORD)
                 }
@@ -44,9 +42,8 @@ class LoginPresenter : LoginContract.Presenter {
             setState(BaseContract.ViewState.LOADING)
             delayedRun {
                 setState(BaseContract.ViewState.COMPLETE)
-                val user = users[login]
-                if (user != null) {
-                    showForget(user)
+                if (dataProvider.checkLoginExists(login)) {
+                    showForget(dataProvider.getUser(login)!!)
                 } else {
                     setError(LoginContract.Error.NO_LOGIN)
                 }
