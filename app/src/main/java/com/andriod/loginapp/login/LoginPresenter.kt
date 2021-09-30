@@ -13,9 +13,7 @@ class LoginPresenter : LoginContract.Presenter {
         this.view = view as LoginContract.View
         view.setState(BaseContract.ViewState.LOADING)
 
-        delayedRun {
-            this.view?.setState(BaseContract.ViewState.IDLE)
-        }
+        delayedRun { this.view?.setState(BaseContract.ViewState.IDLE) }
     }
 
     override fun onDetach() {
