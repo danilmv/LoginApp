@@ -16,4 +16,5 @@
     <string name="error_passwords_not_match">passwords do not match</string>
     <string name="error_login_exists">this login already exists</string>
     <string name="error_wrong_password">must not be empty</string>
+    <string name="logout_button">logout</string>
 </resources>

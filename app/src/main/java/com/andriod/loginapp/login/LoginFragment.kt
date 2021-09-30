@@ -11,10 +11,11 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.andriod.loginapp.R
+import com.andriod.loginapp.base.BaseContract
 import com.andriod.loginapp.databinding.FragmentLoginBinding
 import com.andriod.loginapp.entity.User
-import com.andriod.loginapp.base.BaseContract
 import com.google.android.material.snackbar.Snackbar
+
 
 class LoginFragment : Fragment(), LoginContract.View {
     private var _binding: FragmentLoginBinding? = null
@@ -47,8 +48,8 @@ class LoginFragment : Fragment(), LoginContract.View {
 
     interface Contract {
         fun showSignIn()
-        fun showForget(user: User)
         fun showUser(user: User)
+        fun hideKeyboard(view: View)
     }
 
     override fun setState(state: BaseContract.ViewState) {
@@ -56,6 +57,7 @@ class LoginFragment : Fragment(), LoginContract.View {
     }
 
     override fun setError(error: LoginContract.Error) {
+        contract.hideKeyboard(binding.root)
         handler.post(processErrorRunnable(error))
     }
 
@@ -79,7 +81,7 @@ class LoginFragment : Fragment(), LoginContract.View {
     }
 
     override fun showForget(user: User) {
-        contract.showForget(user)
+        //todo
     }
 
     override fun showUser(user: User) {
