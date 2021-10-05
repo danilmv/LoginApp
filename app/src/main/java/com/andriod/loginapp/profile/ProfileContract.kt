@@ -7,7 +7,7 @@ class ProfileContract: BaseContract() {
         fun showLogin()
     }
 
-    interface Presenter: BaseContract.Presenter{
+    interface Presenter: BaseContract.Presenter<View>{
         fun onLogout()
     }
 }

@@ -37,8 +37,8 @@ class SigninPresenter(private val dataProvider: DataProvider) : SigninContract.P
         view?.showLogin()
     }
 
-    override fun onAttach(view: BaseContract.View) {
-        this.view = view as SigninContract.View
+    override fun onAttach(view: SigninContract.View) {
+        this.view = view
 
         view.setState(BaseContract.ViewState.LOADING)
         delayedRun { view.setState(BaseContract.ViewState.IDLE) }

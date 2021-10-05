@@ -10,8 +10,8 @@ class ProfilePresenter : ProfileContract.Presenter {
         view?.showLogin()
     }
 
-    override fun onAttach(view: BaseContract.View) {
-        this.view = view as ProfileContract.View
+    override fun onAttach(view: ProfileContract.View) {
+        this.view = view
 
         view.setState(BaseContract.ViewState.LOADING)
         BaseContract.delayedRun { view.setState(BaseContract.ViewState.IDLE) }

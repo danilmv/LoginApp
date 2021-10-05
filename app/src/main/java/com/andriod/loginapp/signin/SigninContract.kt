@@ -14,8 +14,8 @@ class SigninContract : BaseContract() {
         fun showLogin()
     }
 
-    interface Presenter : BaseContract.Presenter {
-        fun onSave(login: String, email:String, password: String, password2: String)
+    interface Presenter : BaseContract.Presenter<View> {
+        fun onSave(login: String, email: String, password: String, password2: String)
         fun onCancel()
     }
 }

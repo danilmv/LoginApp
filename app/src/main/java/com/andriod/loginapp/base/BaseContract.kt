@@ -14,9 +14,9 @@ abstract class BaseContract {
         fun setState(state: ViewState)
     }
 
-    interface Presenter {
+    interface Presenter<V : View> {
 
-        fun onAttach(view: View)
+        fun onAttach(view: V)
         fun onDetach()
     }
 

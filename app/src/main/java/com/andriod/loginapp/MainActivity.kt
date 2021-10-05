@@ -16,15 +16,14 @@ class MainActivity : AppCompatActivity(),
     ProfileFragment.Contract {
 
     private lateinit var binding: ActivityMainBinding
-    private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
+    private val inputMethodManager by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null)
-            showLogin()
+        if (savedInstanceState == null) showLogin()
     }
 
     override fun showSignIn() {
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun hideKeyboard(view: View) {
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun showLogin() {

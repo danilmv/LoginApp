@@ -15,7 +15,7 @@ class LoginContract: BaseContract() {
         fun showUser(user: User)
     }
 
-    interface Presenter: BaseContract.Presenter{
+    interface Presenter: BaseContract.Presenter<View>{
         fun onLogin(login: String, pass:String)
         fun onSignIn()
         fun onForgetPassword(login: String)
